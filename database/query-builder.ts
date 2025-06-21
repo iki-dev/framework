@@ -209,7 +209,7 @@ export class QueryBuilder {
     const values: QueryParams = [];
 
     if (this.insertData) {
-      values.push(...Object.values(this.insertData));
+      values.push(...(Object.values(this.insertData) as QueryValue[]));
     }
 
     if (this.isSelectQuery && this.whereConditions.length > 0) {

@@ -144,7 +144,7 @@ export class Request {
     }
 
     if (this.body && typeof this.body === "object" && key in this.body) {
-      return this.body[key];
+      return (this.body as Record<string, unknown>)[key];
     }
 
     return fallback;
@@ -168,7 +168,7 @@ export class Request {
       typeof this._rawBody === "object" &&
       key in this._rawBody
     ) {
-      return this._rawBody[key];
+      return (this._rawBody as Record<string, unknown>)[key];
     }
 
     return fallback;
@@ -279,7 +279,7 @@ export class Request {
    */
   public isSanitised(): boolean {
     const metadata = (this as UnknownRecord).sanitisation;
-    return metadata && metadata.sanitised;
+    return Boolean(metadata && (metadata as { sanitised?: boolean }).sanitised);
   }
 
   /**
@@ -289,6 +289,6 @@ export class Request {
    */
   public hasDangerousContent(): boolean {
     const metadata = (this as UnknownRecord).sanitisation;
-    return metadata && metadata.dangerous;
+    return Boolean(metadata && (metadata as { dangerous?: boolean }).dangerous);
   }
 }

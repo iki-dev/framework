@@ -8,7 +8,8 @@ export class SqliteDriver implements DatabaseDriver {
   ) {}
 
   // TODO: Wondering whether to drop the index parameter...
-  public placeholder(): string {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public placeholder(_: number): string {
     return "?";
   }
 
@@ -24,6 +25,6 @@ export class SqliteDriver implements DatabaseDriver {
   public select(sql: string, params: QueryParams): Promise<QueryResult[]> {
     const stmt = this.driver.prepare(sql);
     const results = stmt.all(...params);
-    return Promise.resolve(results);
+    return Promise.resolve(results as QueryResult[]);
   }
 }

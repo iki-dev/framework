@@ -1,6 +1,7 @@
 import {
   BaseValidator,
   ValidationResult,
+  ValidationError,
   createValidationError,
   createValidationResult,
   mergeValidationErrors,
@@ -32,8 +33,8 @@ export class ObjectValidator<
       ]);
     }
 
-    let processedValue = { ...value };
-    let allErrors: unknown[] = [];
+    let processedValue = { ...(value as Record<string, unknown>) } as T;
+    let allErrors: ValidationError[] = [];
 
     // Validate shape if provided
     if (this.shape) {
@@ -41,7 +42,7 @@ export class ObjectValidator<
 
       // Validate required fields from shape
       for (const [key, validator] of Object.entries(this.shape)) {
-        const fieldValue = processedValue[key];
+        const fieldValue = (processedValue as Record<string, unknown>)[key];
         const fieldResult = validator.validate(fieldValue);
 
         if (!fieldResult.success) {
@@ -63,7 +64,7 @@ export class ObjectValidator<
             createValidationError(
               extraKey,
               "Unknown field",
-              processedValue[extraKey],
+              (processedValue as Record<string, unknown>)[extraKey],
             ),
           );
         }
@@ -110,8 +111,8 @@ export class ObjectValidator<
       ]);
     }
 
-    let processedValue = { ...value };
-    let allErrors: unknown[] = [];
+    let processedValue = { ...(value as Record<string, unknown>) } as T;
+    let allErrors: ValidationError[] = [];
 
     // Validate shape if provided
     if (this.shape) {
@@ -119,7 +120,7 @@ export class ObjectValidator<
 
       // Validate required fields from shape
       for (const [key, validator] of Object.entries(this.shape)) {
-        const fieldValue = processedValue[key];
+        const fieldValue = (processedValue as Record<string, unknown>)[key];
         const fieldResult = await validator.validateAsync(fieldValue);
 
         if (!fieldResult.success) {
@@ -141,7 +142,7 @@ export class ObjectValidator<
             createValidationError(
               extraKey,
               "Unknown field",
-              processedValue[extraKey],
+              (processedValue as Record<string, unknown>)[extraKey],
             ),
           );
         }

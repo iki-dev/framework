@@ -3,7 +3,8 @@ import { Request } from "../http/request.js";
 import { Response } from "../http/response.js";
 import { ApiSanitiser } from "./sanitisation-simple.js";
 
-interface SanitisedRequest extends Request {
+// Type for accessing private/internal properties during sanitisation
+type RequestWithInternals = {
   _query: unknown;
   body: unknown;
   routeParameters: unknown;
@@ -11,7 +12,7 @@ interface SanitisedRequest extends Request {
     sanitised: boolean;
     timestamp: Date;
   };
-}
+};
 
 export interface SimpleSanitisationOptions {
   /**
@@ -60,30 +61,32 @@ export class SimpleSanitisationMiddleware extends Middleware {
       // Sanitise query parameters
       if (this.options.sanitiseQuery) {
         const sanitisedQuery = ApiSanitiser.sanitiseObject(request.allQuery);
-        (request as SanitisedRequest)._query = sanitisedQuery;
+        (request as unknown as RequestWithInternals)._query = sanitisedQuery;
       }
 
       // Sanitise request body
       if (this.options.sanitiseBody && request.body !== undefined) {
         const sanitisedBody = ApiSanitiser.sanitiseObject(request.body);
-        (request as SanitisedRequest).body = sanitisedBody;
+        (request as unknown as RequestWithInternals).body = sanitisedBody;
       }
 
       // Sanitise route parameters
       if (this.options.sanitiseParams) {
         if (
           "routeParameters" in request &&
-          typeof (request as SanitisedRequest).routeParameters === "object"
+          typeof (request as unknown as RequestWithInternals)
+            .routeParameters === "object"
         ) {
           const sanitisedParams = ApiSanitiser.sanitiseObject(
-            (request as SanitisedRequest).routeParameters,
+            (request as unknown as RequestWithInternals).routeParameters,
           );
-          (request as SanitisedRequest).routeParameters = sanitisedParams;
+          (request as unknown as RequestWithInternals).routeParameters =
+            sanitisedParams;
         }
       }
 
       // Mark request as sanitised
-      (request as SanitisedRequest).sanitisation = {
+      (request as unknown as RequestWithInternals).sanitisation = {
         sanitised: true,
         timestamp: new Date(),
       };

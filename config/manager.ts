@@ -5,7 +5,7 @@ import { ConfigValue } from "../types/common.js";
 export class ConfigManager {
   private static _instance: ConfigManager;
   private _loader: ConfigLoader;
-  private _cache: Map<string, unknown> = new Map();
+  private _cache: Map<string, ConfigValue> = new Map();
 
   private constructor() {
     this._loader = ConfigLoader.getInstance();
@@ -30,7 +30,7 @@ export class ConfigManager {
     const cacheKey = `${path}:${type}`;
 
     if (this._cache.has(cacheKey)) {
-      return this._cache.get(cacheKey);
+      return this._cache.get(cacheKey) as T;
     }
 
     const envKey = ConfigParser.pathToEnvKey(path);
@@ -38,14 +38,14 @@ export class ConfigManager {
 
     if (rawValue === undefined) {
       if (defaultValue !== undefined) {
-        this._cache.set(cacheKey, defaultValue);
+        this._cache.set(cacheKey, defaultValue as ConfigValue);
         return defaultValue;
       }
       return undefined as T;
     }
 
     const parsedValue = this.parseValue(rawValue, defaultValue);
-    this._cache.set(cacheKey, parsedValue);
+    this._cache.set(cacheKey, parsedValue as ConfigValue);
     return parsedValue as T;
   }
 

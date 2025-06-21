@@ -1,6 +1,6 @@
 import { QueryBuilder } from "./query-builder.js";
 import { DatabaseManager } from "./manager.js";
-import { UnknownRecord } from "../types/common.js";
+import { UnknownRecord, QueryResult } from "../types/common.js";
 
 // Filtered properties are those that should not be saved to the database, usually they'll
 // be used internally by the model or are not relevant for persistence.
@@ -33,11 +33,13 @@ export abstract class Model {
   public static async all<T extends Model>(
     this: new (...args: unknown[]) => T,
   ): Promise<T[]> {
-    const qb = this.queryBuilder().table(this.name.toLowerCase()).select();
+    const qb = new QueryBuilder(DatabaseManager.driver())
+      .table(this.name.toLowerCase())
+      .select();
 
-    const results = await qb.execute();
+    const results = (await qb.execute()) as QueryResult[];
 
-    return results.map((result) => {
+    return results.map((result: UnknownRecord) => {
       const instance = new this();
       Object.assign(instance, result);
       return instance;
@@ -61,12 +63,12 @@ export abstract class Model {
       return null;
     }
 
-    const qb = this.queryBuilder()
+    const qb = new QueryBuilder(DatabaseManager.driver())
       .table(this.name.toLowerCase())
       .select()
       .where(column, "=", value);
 
-    const results = await qb.execute();
+    const results = (await qb.execute()) as QueryResult[];
 
     if (results.length === 0) {
       return null;
