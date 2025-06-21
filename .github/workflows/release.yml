@@ -5,6 +5,11 @@ on:
     branches: [main]
   pull_request:
 
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
 jobs:
   preview:
     if: github.event_name == 'pull_request'
