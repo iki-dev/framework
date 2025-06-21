@@ -1,6 +1,6 @@
 # Iki (いき)
 
-<img src="assets/iki-logo.png" alt="Iki Logo" width="200" />
+<img src="https://github.com/iki-dev/framework/blob/main/assets/iki-logo.png" alt="Iki Logo" width="200" />
 
 > Iki is a minimalist TypeScript framework for building elegant, structured RESTful APIs.
 
