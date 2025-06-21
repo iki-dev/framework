@@ -7,3 +7,7 @@
 Inspired by the refined sensibilities of Edo-period craftsmanship and modern developer flow, Iki embraces clarity, calm, and composability. With a terminal-first mindset, expressive routing, and zero-boilerplate ergonomics, it helps you focus on the code that matters - nothing more, nothing less.
 
 Whether you're prototyping fast or building something that lasts, Iki makes building APIs feel like shaping something purposeful.
+
+## Contributing
+
+Iki is still in early stages of development and things might be undocumented, if you want to contribute and help shape the project, please continue reading [here](CONTRIBUTING.md).
