@@ -1,0 +1,78 @@
+{
+  "name": "@iki-dev/framework",
+  "version": "0.1.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "types",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./http": {
+      "import": "./dist/http/index.js",
+      "types": "./dist/http/index.d.ts"
+    },
+    "./http/*": {
+      "import": "./dist/http/*.js",
+      "types": "./dist/http/*.d.ts"
+    },
+    "./middleware/*": {
+      "import": "./dist/middleware/*.js",
+      "types": "./dist/middleware/*.d.ts"
+    },
+    "./database/*": {
+      "import": "./dist/database/*.js",
+      "types": "./dist/database/*.d.ts"
+    },
+    "./config/*": {
+      "import": "./dist/config/*.js",
+      "types": "./dist/config/*.d.ts"
+    },
+    "./validation/*": {
+      "import": "./dist/validation/*.js",
+      "types": "./dist/validation/*.d.ts"
+    },
+    "./sanitisation/*": {
+      "import": "./dist/sanitisation/*.js",
+      "types": "./dist/sanitisation/*.d.ts"
+    }
+  },
+  "sideEffects": false,
+  "bin": {
+    "iki": "dist/cli/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "test": "node --test",
+    "dev": "tsc --watch",
+    "release": "changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.29.5",
+    "@eslint/js": "^9.29.0",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^20.0.0",
+    "eslint": "^9.29.0",
+    "globals": "^16.2.0",
+    "prettier": "3.5.3",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.34.1"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.10.0",
+    "commander": "^12.0.0"
+  }
+}
