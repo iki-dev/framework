@@ -1,6 +1,6 @@
 # Contributing
 
-Iki is still in early stages of development and things might be undocumented, if you want to contribute and shape the project, please continue reading.
+Iki is still in early stages of development and things might be undocumented, if you want to contribute and help shape the project, please continue reading.
 
 ## Guidelines
 
