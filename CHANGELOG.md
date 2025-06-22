@@ -1,5 +1,11 @@
 # @iki-dev/framework
 
+## 1.0.0
+
+### Major Changes
+
+- 6770068: Swap controller/class based to functional handlers.
+
 ## 0.1.3
 
 ### Patch Changes
