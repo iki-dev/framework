@@ -19,13 +19,11 @@ export {
   Router,
   Route,
   RouteMatch,
-  RouteBuilder,
   router,
 
-  // Controllers and middleware
-  Controller,
+  // Handlers and middleware
   Handler,
-  ControllerMethod,
+  HandlerFunc,
   Middleware,
   NextFunction,
 

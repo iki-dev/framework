@@ -2,7 +2,7 @@ import { Request } from "./request.js";
 import { Response } from "./response.js";
 import { Router } from "./router.js";
 import { Middleware } from "./middleware.js";
-import { Handler } from "./controller.js";
+import { Handler } from "./handler.js";
 import { HttpMethod } from "./http.js";
 import { parse } from "node:url";
 
