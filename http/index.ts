@@ -14,10 +14,9 @@ export {
 // Routing
 export { Router, RouteMatch, router } from "./router.js";
 export { Route } from "./route.js";
-export { RouteBuilder } from "./route-builder.js";
 
-// Controllers and middleware
-export { Controller, Handler, ControllerMethod } from "./controller.js";
+// Handlers and middleware
+export { Handler, HandlerFunc } from "./handler.js";
 export { Middleware, NextFunction } from "./middleware.js";
 
 // Server and application

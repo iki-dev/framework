@@ -1,7 +1,7 @@
 import { HttpMethod } from "./http.js";
 import { Middleware } from "./middleware.js";
-import { RouteBuilder } from "./route-builder.js";
 import { Route } from "./route.js";
+import { Handler } from "./handler.js";
 
 export interface RouteMatch {
   route: Route;
@@ -35,8 +35,19 @@ export class Router {
     this.routesByMethod[route.method].push(route);
   }
 
-  public route(method: HttpMethod, path: string): RouteBuilder {
-    return new RouteBuilder(method, path, (route) => this.addRoute(route));
+  private route(
+    method: HttpMethod,
+    path: string,
+    handler: Handler,
+    middleware?: Middleware[],
+  ): void {
+    const route: Route = {
+      method,
+      path,
+      handler,
+      middleware: middleware || [],
+    };
+    this.addRoute(route);
   }
 
   private pathToRegex(path: string): { regex: RegExp; paramNames: string[] } {
@@ -75,33 +86,45 @@ export class Router {
     return parameters;
   }
 
-  // Fluent API methods
-  public get(path: string): RouteBuilder {
-    return this.route("GET", path);
+  // HTTP method methods
+  public get(path: string, handler: Handler, middleware?: Middleware[]): void {
+    this.route("GET", path, handler, middleware);
   }
 
-  public post(path: string): RouteBuilder {
-    return this.route("POST", path);
+  public post(path: string, handler: Handler, middleware?: Middleware[]): void {
+    this.route("POST", path, handler, middleware);
   }
 
-  public put(path: string): RouteBuilder {
-    return this.route("PUT", path);
+  public put(path: string, handler: Handler, middleware?: Middleware[]): void {
+    this.route("PUT", path, handler, middleware);
   }
 
-  public delete(path: string): RouteBuilder {
-    return this.route("DELETE", path);
+  public delete(
+    path: string,
+    handler: Handler,
+    middleware?: Middleware[],
+  ): void {
+    this.route("DELETE", path, handler, middleware);
   }
 
-  public patch(path: string): RouteBuilder {
-    return this.route("PATCH", path);
+  public patch(
+    path: string,
+    handler: Handler,
+    middleware?: Middleware[],
+  ): void {
+    this.route("PATCH", path, handler, middleware);
   }
 
-  public options(path: string): RouteBuilder {
-    return this.route("OPTIONS", path);
+  public options(
+    path: string,
+    handler: Handler,
+    middleware?: Middleware[],
+  ): void {
+    this.route("OPTIONS", path, handler, middleware);
   }
 
-  public head(path: string): RouteBuilder {
-    return this.route("HEAD", path);
+  public head(path: string, handler: Handler, middleware?: Middleware[]): void {
+    this.route("HEAD", path, handler, middleware);
   }
 
   public resolve(method: HttpMethod, path: string): RouteMatch | undefined {
