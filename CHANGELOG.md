@@ -1,5 +1,11 @@
 # @iki-dev/framework
 
+## 0.1.3
+
+### Patch Changes
+
+- 86f1827: Updates README.md to include contributing and adds sqlite ignore in .gitignore.
+
 ## 0.1.2
 
 ### Patch Changes
